@@ -5,8 +5,10 @@ import com.telusko.quizapp.dao.QuizDao;
 import com.telusko.quizapp.model.Question;
 import com.telusko.quizapp.model.QuestionWrapper;
 import com.telusko.quizapp.model.Quiz;
+import com.telusko.quizapp.model.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -43,5 +45,19 @@ public class QuizService {
             questionsForUser.add(qw);
         }
         return new ResponseEntity<>(questionsForUser, HttpStatus.OK);
+    }
+
+    public ResponseEntity<Integer> calculateResult(int id, List<Response> responses) {
+        Quiz quiz = quizDao.findById(id).get();
+        List<Question> questions = quiz.getQuestions();
+        int right=0;
+        int i=0;
+        for(Question q:questions){
+            if(q.getRightAnswer().equals(responses.get(i).getResponse())){
+                right++;
+            }
+            i++;
+        }
+        return new ResponseEntity<>(right, HttpStatus.OK);
     }
 }
