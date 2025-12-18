@@ -6,6 +6,7 @@ import com.telusko.question_service.model.QuestionWrapper;
 import com.telusko.question_service.model.Response;
 import com.telusko.question_service.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,11 +18,15 @@ public class QuestionController {
     @Autowired
     QuestionService questionService;
 
+    @Autowired
+    Environment environment;
+
     @GetMapping("allQuestions")
     public ResponseEntity<List<Question>> getAllQuestions() {
 //    public String getAllQuestions(){
 
 //        return "Hi...These are all your questions";
+
         return questionService.getAllQuestions();
     }
 
@@ -58,8 +63,9 @@ public class QuestionController {
     //[b]quiz-question table contains quiz-id and questions-id (not actual question)
     //hence we need to create endpoint that will serve questions based on given question-ids
     //i.e.getQuizQuestions(i/p:list of question ids) in question-service
-    @GetMapping("getQuestions")
+    @PostMapping("getQuestions")
     public ResponseEntity<List<QuestionWrapper>> getQuestionsFromId(@RequestBody List<Integer> questionIds) {
+        System.out.println("PORT NO. OF INSTANCE USED: " + environment.getProperty("server.port"));
         return questionService.getQuestionsListFromQuestionsIdList(questionIds);
     }
 

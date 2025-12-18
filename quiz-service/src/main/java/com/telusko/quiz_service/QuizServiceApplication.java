@@ -1,4 +1,4 @@
-package com.telusko.question_service;
+package com.telusko.quiz_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -6,10 +6,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @SpringBootApplication
 @EnableFeignClients
-public class QuestionServiceApplication {
+public class QuizServiceApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(QuestionServiceApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(QuizServiceApplication.class, args);
+	}
 
 }
